@@ -6,20 +6,21 @@ interface Quartier {
 }
 
 interface QuartierSelectorProps {
-    quartiers: Quartier[]
-    selectedQuartier: string
-    onSelect: (quartier: string) => void
-    descriptionLocalisation: string
-    onDescriptionChange: (value: string) => void
+    location: {
+        quartiers: Quartier[]
+        selectedQuartier: string
+        description: string
+    }
+    actions: {
+        onSelect: (quartier: string) => void
+        onDescriptionChange: (value: string) => void
+    }
     error?: string
 }
 
 export default function QuartierSelector({
-    quartiers,
-    selectedQuartier,
-    onSelect,
-    descriptionLocalisation,
-    onDescriptionChange,
+    location,
+    actions,
     error
 }: QuartierSelectorProps) {
     return (
@@ -27,16 +28,16 @@ export default function QuartierSelector({
             <Header />
 
             <QuartierChips
-                quartiers={quartiers}
-                selectedQuartier={selectedQuartier}
-                onSelect={onSelect}
+                quartiers={location.quartiers}
+                selectedQuartier={location.selectedQuartier}
+                onSelect={actions.onSelect}
             />
 
             {error && <p className="text-red-500 text-sm mt-3">{error}</p>}
 
             <LocationDescription
-                value={descriptionLocalisation}
-                onChange={onDescriptionChange}
+                value={location.description}
+                onChange={actions.onDescriptionChange}
             />
         </div>
     )

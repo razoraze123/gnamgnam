@@ -5,21 +5,22 @@ import type { CartItem } from '../context/CartContext'
 interface CartSidebarProps {
     isOpen: boolean
     onClose: () => void
-    items: CartItem[]
-    total: number
-    updateQuantity: (id: string, quantity: number) => void
-    removeFromCart: (id: string) => void
-    clearCart: () => void
+    cart: {
+        items: CartItem[]
+        total: number
+    }
+    actions: {
+        updateQuantity: (id: string, quantity: number) => void
+        removeFromCart: (id: string) => void
+        clearCart: () => void
+    }
 }
 
 export default function CartSidebar({
     isOpen,
     onClose,
-    items,
-    total,
-    updateQuantity,
-    removeFromCart,
-    clearCart
+    cart,
+    actions
 }: CartSidebarProps) {
     if (!isOpen) return null
 
@@ -44,22 +45,22 @@ export default function CartSidebar({
                 </div>
 
                 <div className="flex-1 overflow-y-auto p-4">
-                    {items.length === 0 ? (
+                    {cart.items.length === 0 ? (
                         <EmptyCart onClose={onClose} />
                     ) : (
                         <CartItemsList
-                            items={items}
-                            updateQuantity={updateQuantity}
-                            removeFromCart={removeFromCart}
+                            items={cart.items}
+                            updateQuantity={actions.updateQuantity}
+                            removeFromCart={actions.removeFromCart}
                         />
                     )}
                 </div>
 
-                {items.length > 0 && (
+                {cart.items.length > 0 && (
                     <CartFooter
-                        total={total}
+                        total={cart.total}
                         onClose={onClose}
-                        clearCart={clearCart}
+                        clearCart={actions.clearCart}
                     />
                 )}
             </div>
@@ -130,8 +131,8 @@ function CartItemCard({ item, updateQuantity, removeFromCart }: CartItemCardProp
                         onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
                         disabled={isMinQuantity}
                         className={`w-8 h-8 rounded-full bg-white border border-royal/20 text-royal transition-colors ${isMinQuantity
-                                ? 'opacity-30 cursor-not-allowed'
-                                : 'hover:bg-royal hover:text-white'
+                            ? 'opacity-30 cursor-not-allowed'
+                            : 'hover:bg-royal hover:text-white'
                             }`}
                         aria-label={`Réduire la quantité de ${item.product.nom}`}
                     >

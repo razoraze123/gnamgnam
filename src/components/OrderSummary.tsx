@@ -3,20 +3,21 @@ import type { CartItem } from '../context/CartContext'
 
 interface OrderSummaryProps {
     items: CartItem[]
-    total: number
-    fraisLivraison: number
-    totalFinal: number
-    modeLivraison: 'livraison' | 'retrait'
-    quartier: string
+    pricing: {
+        total: number
+        fraisLivraison: number
+        totalFinal: number
+    }
+    delivery: {
+        modeLivraison: 'livraison' | 'retrait'
+        quartier: string
+    }
 }
 
 export default function OrderSummary({
     items,
-    total,
-    fraisLivraison,
-    totalFinal,
-    modeLivraison,
-    quartier
+    pricing,
+    delivery
 }: OrderSummaryProps) {
     return (
         <div className="bg-white rounded-3xl shadow-lg p-6 sticky top-24">
@@ -29,11 +30,8 @@ export default function OrderSummary({
             </div>
 
             <PriceSummary
-                total={total}
-                fraisLivraison={fraisLivraison}
-                totalFinal={totalFinal}
-                modeLivraison={modeLivraison}
-                quartier={quartier}
+                pricing={pricing}
+                delivery={delivery}
             />
 
             <Link
@@ -70,26 +68,24 @@ function OrderItem({ item }: { item: CartItem }) {
 }
 
 interface PriceSummaryProps {
-    total: number
-    fraisLivraison: number
-    totalFinal: number
-    modeLivraison: 'livraison' | 'retrait'
-    quartier: string
+    pricing: {
+        total: number
+        fraisLivraison: number
+        totalFinal: number
+    }
+    delivery: {
+        modeLivraison: 'livraison' | 'retrait'
+        quartier: string
+    }
 }
 
-function PriceSummary({
-    total,
-    fraisLivraison,
-    totalFinal,
-    modeLivraison,
-    quartier
-}: PriceSummaryProps) {
+function PriceSummary({ pricing, delivery }: PriceSummaryProps) {
     const renderDeliveryFee = () => {
-        if (modeLivraison === 'retrait') {
+        if (delivery.modeLivraison === 'retrait') {
             return <span className="text-sage">Gratuit</span>
         }
-        if (quartier) {
-            return <span className="text-sage">{fraisLivraison.toLocaleString()} FCFA</span>
+        if (delivery.quartier) {
+            return <span className="text-sage">{pricing.fraisLivraison.toLocaleString()} FCFA</span>
         }
         return <span className="text-royal/40 italic">Sélectionnez un quartier</span>
     }
@@ -98,7 +94,7 @@ function PriceSummary({
         <div className="border-t border-royal/10 pt-4 space-y-2">
             <div className="flex justify-between text-sm text-royal/60">
                 <span>Sous-total</span>
-                <span>{total.toLocaleString()} FCFA</span>
+                <span>{pricing.total.toLocaleString()} FCFA</span>
             </div>
             <div className="flex justify-between text-sm text-royal/60">
                 <span>Livraison</span>
@@ -106,7 +102,7 @@ function PriceSummary({
             </div>
             <div className="flex justify-between text-xl font-bold text-royal pt-2 border-t border-royal/10">
                 <span>Total</span>
-                <span>{totalFinal.toLocaleString()} FCFA</span>
+                <span>{pricing.totalFinal.toLocaleString()} FCFA</span>
             </div>
         </div>
     )

@@ -5,6 +5,8 @@ import { useClient } from '../context/ClientContext'
 import { supabase } from '../lib/supabase'
 import { sanitizeInput, isValidPhone } from '../utils/security'
 import { generateOrderWhatsAppUrl } from '../utils/whatsapp'
+import QuartierSelector from '../components/QuartierSelector'
+import OrderSummary from '../components/OrderSummary'
 
 // Liste des quartiers avec frais de livraison
 const QUARTIERS = [
@@ -280,56 +282,18 @@ export default function Checkout() {
 
                                 {/* Quartier Selection - Only shown when livraison is selected */}
                                 {formData.modeLivraison === 'livraison' && (
-                                    <div className="mt-6 p-5 bg-gradient-to-br from-sand to-sand-warm rounded-2xl border border-sand-dark">
-                                        <div className="flex items-center gap-2 mb-4">
-                                            <div className="w-8 h-8 bg-safran/10 rounded-lg flex items-center justify-center">
-                                                <svg className="w-4 h-4 text-safran" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                </svg>
-                                            </div>
-                                            <span className="font-semibold text-royal">Où livrer ?</span>
-                                        </div>
-
-                                        <div className="flex flex-wrap gap-2">
-                                            {QUARTIERS.map(quartier => (
-                                                <button
-                                                    key={quartier.nom}
-                                                    type="button"
-                                                    onClick={() => setFormData(prev => ({ ...prev, quartier: quartier.nom }))}
-                                                    className={`group relative px-4 py-2.5 rounded-full font-medium text-sm transition-all duration-200 ${formData.quartier === quartier.nom
-                                                        ? 'bg-safran text-white shadow-lg shadow-safran/30 scale-105'
-                                                        : 'bg-white text-royal/70 hover:bg-safran/10 hover:text-safran border border-royal/10'
-                                                        }`}
-                                                >
-                                                    <span className="flex items-center gap-2">
-                                                        {quartier.nom}
-                                                        <span className={`text-xs px-1.5 py-0.5 rounded-full ${formData.quartier === quartier.nom
-                                                            ? 'bg-white/20 text-white'
-                                                            : 'bg-sage/10 text-sage'
-                                                            }`}>
-                                                            {quartier.frais.toLocaleString()}
-                                                        </span>
-                                                    </span>
-                                                </button>
-                                            ))}
-                                        </div>
-                                        {errors.quartier && <p className="text-red-500 text-sm mt-3">{errors.quartier}</p>}
-
-                                        <div className="mt-4">
-                                            <label className="block text-sm font-medium text-royal/70 mb-2">
-                                                Précisez votre localisation (optionnel)
-                                            </label>
-                                            <textarea
-                                                name="descriptionLocalisation"
-                                                value={formData.descriptionLocalisation}
-                                                onChange={handleChange}
-                                                placeholder="Ex: Près de la pharmacie centrale, maison bleue après le carrefour..."
-                                                rows={2}
-                                                className="w-full px-4 py-3 rounded-xl border-2 border-royal/10 bg-white transition-colors focus:outline-none focus:border-safran resize-none text-sm"
-                                            />
-                                        </div>
-                                    </div>
+                                    <QuartierSelector
+                                        location={{
+                                            quartiers: QUARTIERS,
+                                            selectedQuartier: formData.quartier,
+                                            description: formData.descriptionLocalisation
+                                        }}
+                                        actions={{
+                                            onSelect: (val) => setFormData(prev => ({ ...prev, quartier: val })),
+                                            onDescriptionChange: (val) => setFormData(prev => ({ ...prev, descriptionLocalisation: val }))
+                                        }}
+                                        error={errors.quartier}
+                                    />
                                 )}
                             </div>
 
@@ -391,52 +355,18 @@ export default function Checkout() {
 
                     {/* Order Summary */}
                     <div className="lg:col-span-2">
-                        <div className="bg-white rounded-3xl shadow-lg p-6 sticky top-24">
-                            <h2 className="text-lg font-bold text-royal mb-4">Récapitulatif</h2>
-
-                            <div className="space-y-3 max-h-[300px] overflow-y-auto mb-4">
-                                {items.map(item => (
-                                    <div key={item.product.id} className="flex gap-3 p-3 bg-sand/50 rounded-xl">
-                                        <img
-                                            src={item.product.image_url || '/placeholder.jpg'}
-                                            alt={item.product.nom}
-                                            className="w-16 h-16 object-cover rounded-lg"
-                                        />
-                                        <div className="flex-1 min-w-0">
-                                            <h3 className="font-medium text-royal text-sm truncate">{item.product.nom}</h3>
-                                            <p className="text-royal/60 text-sm">Qté: {item.quantity}</p>
-                                            <p className="text-sage font-bold text-sm">{(item.product.prix * item.quantity).toLocaleString()} FCFA</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className="border-t border-royal/10 pt-4 space-y-2">
-                                <div className="flex justify-between text-sm text-royal/60">
-                                    <span>Sous-total</span>
-                                    <span>{total.toLocaleString()} FCFA</span>
-                                </div>
-                                <div className="flex justify-between text-sm text-royal/60">
-                                    <span>Livraison</span>
-                                    <DeliveryPrice
-                                        modeLivraison={formData.modeLivraison}
-                                        quartier={formData.quartier}
-                                        frais={fraisLivraison}
-                                    />
-                                </div>
-                                <div className="flex justify-between text-xl font-bold text-royal pt-2 border-t border-royal/10">
-                                    <span>Total</span>
-                                    <span>{totalFinal.toLocaleString()} FCFA</span>
-                                </div>
-                            </div>
-
-                            <Link
-                                to="/boutique"
-                                className="block text-center text-sage text-sm font-medium mt-4 hover:underline"
-                            >
-                                ← Continuer mes achats
-                            </Link>
-                        </div>
+                        <OrderSummary
+                            items={items}
+                            pricing={{
+                                total,
+                                fraisLivraison,
+                                totalFinal
+                            }}
+                            delivery={{
+                                modeLivraison: formData.modeLivraison,
+                                quartier: formData.quartier
+                            }}
+                        />
                     </div>
                 </div>
             </div>
@@ -444,20 +374,4 @@ export default function Checkout() {
     )
 }
 
-interface DeliveryPriceProps {
-    modeLivraison: 'livraison' | 'retrait'
-    quartier: string
-    frais: number
-}
 
-function DeliveryPrice({ modeLivraison, quartier, frais }: DeliveryPriceProps) {
-    if (modeLivraison === 'retrait') {
-        return <span className="text-sage">Gratuit</span>
-    }
-
-    if (!quartier) {
-        return <span className="text-royal/40 italic">Sélectionnez un quartier</span>
-    }
-
-    return <span className="text-sage">{frais.toLocaleString()} FCFA</span>
-}

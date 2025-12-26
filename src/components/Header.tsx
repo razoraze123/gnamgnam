@@ -71,11 +71,8 @@ export default function Header() {
             <CartSidebar
                 isOpen={isCartOpen}
                 onClose={() => setIsCartOpen(false)}
-                items={items}
-                total={total}
-                updateQuantity={updateQuantity}
-                removeFromCart={removeFromCart}
-                clearCart={clearCart}
+                cart={{ items, total }}
+                actions={{ updateQuantity, removeFromCart, clearCart }}
             />
 
             <PhoneLoginModal
