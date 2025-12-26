@@ -15,8 +15,8 @@ const NAV_LINKS = [
     { path: '/contact', label: 'Contact' },
 ]
 
-const LOGO_SIZE_MOBILE = 'w-20 h-20'
-const LOGO_SIZE_DESKTOP = 'md:w-24 md:h-24'
+const LOGO_SIZE_SM = 'w-20 h-20'
+const LOGO_SIZE_LG = 'md:w-24 md:h-24'
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -36,14 +36,20 @@ export default function Header() {
                         <Logo />
                         <DesktopNav navLinks={NAV_LINKS} isActive={isActive} />
                         <HeaderActions
-                            isLogged={isLogged}
-                            client={client}
-                            logout={logout}
-                            openLogin={() => setIsLoginOpen(true)}
-                            openCart={() => setIsCartOpen(true)}
-                            itemCount={itemCount}
-                            isMenuOpen={isMenuOpen}
-                            toggleMenu={() => setIsMenuOpen(!isMenuOpen)}
+                            auth={{
+                                isLogged,
+                                client,
+                                logout,
+                                openLogin: () => setIsLoginOpen(true),
+                            }}
+                            cart={{
+                                openCart: () => setIsCartOpen(true),
+                                itemCount,
+                            }}
+                            menu={{
+                                isMenuOpen,
+                                toggleMenu: () => setIsMenuOpen(!isMenuOpen),
+                            }}
                         />
                     </div>
                 </div>
@@ -53,10 +59,12 @@ export default function Header() {
                     navLinks={NAV_LINKS}
                     isActive={isActive}
                     onClose={() => setIsMenuOpen(false)}
-                    isLogged={isLogged}
-                    client={client}
-                    logout={logout}
-                    openLogin={() => setIsLoginOpen(true)}
+                    auth={{
+                        isLogged,
+                        client,
+                        logout,
+                        openLogin: () => setIsLoginOpen(true),
+                    }}
                 />
             </header>
 
@@ -84,7 +92,7 @@ function Logo() {
             <img
                 src='/logo.png'
                 alt='Gnam Gnam Logo'
-                className={`${LOGO_SIZE_MOBILE} ${LOGO_SIZE_DESKTOP} object-contain mix-blend-multiply transition-transform group-hover:scale-105`}
+                className={`${LOGO_SIZE_SM} ${LOGO_SIZE_LG} object-contain mix-blend-multiply transition-transform group-hover:scale-105`}
             />
         </Link>
     )
@@ -118,36 +126,33 @@ function DesktopNav({ navLinks, isActive }: DesktopNavProps) {
 }
 
 interface HeaderActionsProps {
-    isLogged: boolean
-    client: { prenom?: string | null } | null
-    logout: () => void
-    openLogin: () => void
-    openCart: () => void
-    itemCount: number
-    isMenuOpen: boolean
-    toggleMenu: () => void
+    auth: {
+        isLogged: boolean
+        client: { prenom?: string | null } | null
+        logout: () => void
+        openLogin: () => void
+    }
+    cart: {
+        openCart: () => void
+        itemCount: number
+    }
+    menu: {
+        isMenuOpen: boolean
+        toggleMenu: () => void
+    }
 }
 
-function HeaderActions({
-    isLogged,
-    client,
-    logout,
-    openLogin,
-    openCart,
-    itemCount,
-    isMenuOpen,
-    toggleMenu
-}: HeaderActionsProps) {
+function HeaderActions({ auth, cart, menu }: HeaderActionsProps) {
     return (
         <div className='flex items-center gap-2'>
             <UserButton
-                isLogged={isLogged}
-                clientName={client?.prenom}
-                logout={logout}
-                openLogin={openLogin}
+                isLogged={auth.isLogged}
+                clientName={auth.client?.prenom}
+                logout={auth.logout}
+                openLogin={auth.openLogin}
             />
-            <CartButton onClick={openCart} itemCount={itemCount} />
-            <MobileMenuButton isOpen={isMenuOpen} onClick={toggleMenu} />
+            <CartButton onClick={cart.openCart} itemCount={cart.itemCount} />
+            <MobileMenuButton isOpen={menu.isMenuOpen} onClick={menu.toggleMenu} />
         </div>
     )
 }

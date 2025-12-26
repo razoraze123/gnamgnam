@@ -12,10 +12,12 @@ interface MobileMenuProps {
     navLinks: NavLink[]
     isActive: (path: string) => boolean
     onClose: () => void
-    isLogged: boolean
-    client: Client | null
-    logout: () => void
-    openLogin: () => void
+    auth: {
+        isLogged: boolean
+        client: Client | null
+        logout: () => void
+        openLogin: () => void
+    }
 }
 
 export default function MobileMenu({
@@ -23,10 +25,7 @@ export default function MobileMenu({
     navLinks,
     isActive,
     onClose,
-    isLogged,
-    client,
-    logout,
-    openLogin
+    auth
 }: MobileMenuProps) {
     if (!isOpen) return null
 
@@ -39,8 +38,8 @@ export default function MobileMenu({
                         to={link.path}
                         onClick={onClose}
                         className={`block px-4 py-3 rounded-xl font-medium transition-colors ${isActive(link.path)
-                                ? 'bg-sage/10 text-sage'
-                                : 'text-royal/70 hover:bg-sand-dark'
+                            ? 'bg-sage/10 text-sage'
+                            : 'text-royal/70 hover:bg-sand-dark'
                             }`}
                     >
                         {link.label}
@@ -48,10 +47,7 @@ export default function MobileMenu({
                 ))}
 
                 <MobileAccountSection
-                    isLogged={isLogged}
-                    client={client}
-                    logout={logout}
-                    openLogin={openLogin}
+                    auth={auth}
                     onClose={onClose}
                 />
             </nav>
@@ -60,38 +56,34 @@ export default function MobileMenu({
 }
 
 interface MobileAccountSectionProps {
-    isLogged: boolean
-    client: Client | null
-    logout: () => void
-    openLogin: () => void
+    auth: {
+        isLogged: boolean
+        client: Client | null
+        logout: () => void
+        openLogin: () => void
+    }
     onClose: () => void
 }
 
-function MobileAccountSection({
-    isLogged,
-    client,
-    logout,
-    openLogin,
-    onClose
-}: MobileAccountSectionProps) {
+function MobileAccountSection({ auth, onClose }: MobileAccountSectionProps) {
     const handleLogout = () => {
-        logout()
+        auth.logout()
         onClose()
     }
 
     const handleLogin = () => {
-        openLogin()
+        auth.openLogin()
         onClose()
     }
 
     return (
         <div className="border-t border-royal/10 pt-2 mt-2">
-            {isLogged ? (
+            {auth.isLogged ? (
                 <div className="flex items-center justify-between px-4 py-3">
                     <div className="flex items-center gap-2">
                         <User className="w-5 h-5 text-safran" />
                         <span className="font-medium text-royal">
-                            {client?.prenom || 'Mon compte'}
+                            {auth.client?.prenom || 'Mon compte'}
                         </span>
                     </div>
                     <button
