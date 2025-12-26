@@ -10,6 +10,10 @@ export interface Product {
     nom: string
     prix: number
     description: string
+    ingredients?: string
+    preparation?: string[]
+    poids?: string
+    badge_specifique?: string
     categorie_age: string
     image_url: string
     stock_disponible: number

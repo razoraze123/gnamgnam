@@ -85,30 +85,59 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
                             </div>
 
                             {/* Description */}
-                            <div className='mb-8'>
-                                <p className='text-royal/70 leading-relaxed text-sm md:text-base'>
+                            <div className='mb-6'>
+                                <p className='text-royal/70 leading-relaxed text-sm'>
                                     {product.description}
                                 </p>
                             </div>
 
-                            {/* Benefits - Modern grid */}
+                            {/* Ingrédients */}
+                            {product.ingredients && (
+                                <div className='mb-6'>
+                                    <h3 className='text-[10px] font-bold text-royal/40 uppercase tracking-widest mb-3 flex items-center gap-2'>
+                                        <Leaf className='w-3 h-3 text-sage' /> Ingrédients
+                                    </h3>
+                                    <p className='text-sm text-royal/80 bg-sand/50 p-3 rounded-xl border border-sand-dark/30 italic'>
+                                        {product.ingredients}
+                                    </p>
+                                </div>
+                            )}
+
+                            {/* Préparation */}
+                            {product.preparation && product.preparation.length > 0 && (
+                                <div className='mb-6'>
+                                    <h3 className='text-[10px] font-bold text-royal/40 uppercase tracking-widest mb-4 flex items-center gap-2'>
+                                        <Sparkles className='w-3 h-3 text-safran' /> Mode de préparation
+                                    </h3>
+                                    <div className='space-y-3'>
+                                        {product.preparation.map((step, index) => (
+                                            <div key={index} className='flex gap-3 items-start group'>
+                                                <span className='flex-shrink-0 w-5 h-5 rounded-full bg-sage/10 text-sage text-[10px] font-bold flex items-center justify-center border border-sage/20 group-hover:bg-sage group-hover:text-white transition-colors mt-0.5'>
+                                                    {index + 1}
+                                                </span>
+                                                <p className='text-xs text-royal/70 leading-snug'>{step}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Engagements */}
                             <div className='mb-8'>
                                 <h3 className='text-[10px] font-bold text-royal/40 uppercase tracking-widest mb-4'>
-                                    Qualités nutritionnelles
+                                    Engagements
                                 </h3>
                                 <div className='grid grid-cols-2 gap-3'>
                                     {[
-                                        { icon: <Leaf className='w-4 h-4' />, text: '100% Naturel', color: 'text-sage' },
-                                        { icon: <Sparkles className='w-4 h-4' />, text: 'Sans additifs', color: 'text-sage' },
-                                        { icon: <ShieldCheck className='w-4 h-4' />, text: 'Nutritif', color: 'text-sage' },
-                                        { icon: <Heart className='w-4 h-4' />, text: 'Avec amour', color: 'text-sage' },
+                                        { icon: <ShieldCheck className='w-3 h-3' />, text: '100% Naturel', color: 'text-sage' },
+                                        { icon: <Heart className='w-3 h-3' />, text: 'Sans conservateurs', color: 'text-sage' },
                                     ].map((benefit, index) => (
                                         <div
                                             key={index}
-                                            className='flex items-center gap-3 p-3 rounded-2xl bg-sand/50 border border-sand-dark/50'
+                                            className='flex items-center gap-2 p-2 rounded-xl bg-sand/50 border border-sand-dark/50'
                                         >
                                             <span className={benefit.color}>{benefit.icon}</span>
-                                            <span className='text-xs font-semibold text-royal/80'>{benefit.text}</span>
+                                            <span className='text-[10px] font-semibold text-royal/80'>{benefit.text}</span>
                                         </div>
                                     ))}
                                 </div>

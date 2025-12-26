@@ -42,15 +42,27 @@ export default function ProductCard({ product }: ProductCardProps) {
                         </span>
                     )}
 
+                    {product.badge_specifique && (
+                        <span className='absolute top-3 right-3 px-3 py-1 bg-safran text-white text-[10px] font-bold uppercase tracking-wider rounded-full shadow-lg z-10'>
+                            {product.badge_specifique}
+                        </span>
+                    )}
+
+                    {product.poids && (
+                        <span className='absolute bottom-3 right-3 px-3 py-1 bg-white/90 backdrop-blur-sm text-royal text-[10px] font-bold rounded-lg shadow-sm'>
+                            {product.poids}
+                        </span>
+                    )}
+
                     {isOutOfStock && (
-                        <div className='absolute inset-0 bg-black/50 flex items-center justify-center'>
+                        <div className='absolute inset-0 bg-black/50 flex items-center justify-center z-20'>
                             <span className='px-4 py-2 bg-red-500 text-white font-bold rounded-full'>
                                 Épuisé
                             </span>
                         </div>
                     )}
 
-                    {isLowStock && !isOutOfStock && (
+                    {isLowStock && !isOutOfStock && !product.badge_specifique && (
                         <span className='absolute top-3 right-3 px-3 py-1 bg-orange-500 text-white text-xs font-semibold rounded-full animate-pulse'>
                             Stock limité
                         </span>

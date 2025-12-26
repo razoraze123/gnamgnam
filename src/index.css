@@ -7,15 +7,15 @@
   --color-royal-light: #2A4365;
   --color-royal-dark: #1A202C;
 
-  --color-sage: #1E8449;
-  /* Deep Green - Niger Flag & Nature */
-  --color-sage-light: #27AE60;
-  --color-sage-dark: #145A32;
+  --color-sage: #064E3B;
+  /* Dark Forest Green from labels */
+  --color-sage-light: #059669;
+  --color-sage-dark: #064E3B;
 
-  --color-safran: #E67E22;
-  /* Saffron Orange - Niger Flag & Sahara */
-  --color-safran-light: #F39C12;
-  --color-safran-dark: #D35400;
+  --color-safran: #B45309;
+  /* Golden Amber from labels */
+  --color-safran-light: #D97706;
+  --color-safran-dark: #78350F;
 
   --color-sand: #FDFBF7;
   /* Pearl Sand - Elegant background */
