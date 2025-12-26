@@ -45,7 +45,7 @@ export default function Home() {
             {/* Hero Section */}
             <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-sand via-sand-warm to-sand">
                 {/* Decorative Blobs */}
-                <div className="absolute top-20 right-10 w-72 h-72 bg-sage/20 blob" />
+                <div className="absolute top-32 md:top-20 right-10 w-72 h-72 bg-sage/20 blob" />
                 <div className="absolute bottom-20 left-10 w-96 h-96 bg-royal/10 blob" style={{ animationDelay: '-4s' }} />
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 relative z-10">

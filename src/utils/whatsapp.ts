@@ -71,11 +71,13 @@ export function generateOrderWhatsAppUrl({
     }
     message += `\n`
 
-    message += `*💳 PAIEMENT*\n`
-    const deliveryType = customerInfo.modeLivraison === 'livraison' ? 'livraison' : 'remise'
-    const paymentText = customerInfo.moyenPaiement === 'especes'
-        ? `💵 Espèces à la ${deliveryType}`
-        : '📱 Nita'
+    let paymentText = ''
+    if (customerInfo.moyenPaiement === 'especes') {
+        const deliveryType = customerInfo.modeLivraison === 'livraison' ? 'livraison' : 'remise'
+        paymentText = `💵 Espèces à la ${deliveryType}`
+    } else {
+        paymentText = '📱 Nita'
+    }
     message += `${paymentText}\n\n`
 
     message += `*🛒 PANIER*\n`

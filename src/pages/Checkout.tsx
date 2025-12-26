@@ -417,13 +417,11 @@ export default function Checkout() {
                                 </div>
                                 <div className="flex justify-between text-sm text-royal/60">
                                     <span>Livraison</span>
-                                    {formData.modeLivraison === 'retrait' ? (
-                                        <span className="text-sage">Gratuit</span>
-                                    ) : formData.quartier ? (
-                                        <span className="text-sage">{fraisLivraison.toLocaleString()} FCFA</span>
-                                    ) : (
-                                        <span className="text-royal/40 italic">Sélectionnez un quartier</span>
-                                    )}
+                                    <DeliveryPrice
+                                        modeLivraison={formData.modeLivraison}
+                                        quartier={formData.quartier}
+                                        frais={fraisLivraison}
+                                    />
                                 </div>
                                 <div className="flex justify-between text-xl font-bold text-royal pt-2 border-t border-royal/10">
                                     <span>Total</span>
@@ -443,4 +441,22 @@ export default function Checkout() {
             </div>
         </main>
     )
+}
+
+interface DeliveryPriceProps {
+    modeLivraison: 'livraison' | 'retrait'
+    quartier: string
+    frais: number
+}
+
+function DeliveryPrice({ modeLivraison, quartier, frais }: DeliveryPriceProps) {
+    if (modeLivraison === 'retrait') {
+        return <span className="text-sage">Gratuit</span>
+    }
+
+    if (!quartier) {
+        return <span className="text-royal/40 italic">Sélectionnez un quartier</span>
+    }
+
+    return <span className="text-sage">{frais.toLocaleString()} FCFA</span>
 }
