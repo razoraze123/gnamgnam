@@ -35,9 +35,9 @@ CREATE POLICY "Allow public read on reviews" ON reviews
 
 -- Seed sample products
 INSERT INTO products (nom, prix, description, categorie_age, image_url, stock_disponible) VALUES
-('Spécial Épicé - Bouillie Mil & Banane par Gnam Gnam bouillie spécial épicé', 2500, 'Délicieuse bouillie de mil enrichie à la banane mûre. Texture onctueuse et goût naturellement sucré, parfaite pour le petit-déjeuner de bébé.', 'Dès 6 mois', 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400', 25),
-('Spécial Céréales - Bouillie Maïs & Arachide par Gnam Gnam bouillie Spécial Céréales', 2800, 'Mélange nutritif de maïs et d''arachide grillée. Riche en protéines végétales pour une croissance optimale.', 'Dès 8 mois', 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400', 18),
-('Spécial Mil - Bouillie Soja Premium par Gnam Gnam bouillie spécial Mil', 3200, 'Notre formule premium au soja, enrichie en vitamines et minéraux. Idéale pour les bébés en pleine croissance.', 'Dès 6 mois', 'https://images.unsplash.com/photo-1495521939206-a217db9df264?w=400', 12),
+('Spécial Épicé', 2500, 'Délicieuse bouillie de mil enrichie à la banane mûre. Texture onctueuse et goût naturellement sucré, parfaite pour le petit-déjeuner de bébé.', 'Dès 6 mois', 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400', 25),
+('Spécial Céréales', 2800, 'Mélange nutritif de maïs et d''arachide grillée. Riche en protéines végétales pour une croissance optimale.', 'Dès 8 mois', 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400', 18),
+('Spécial Mil', 3200, 'Notre formule premium au soja, enrichie en vitamines et minéraux. Idéale pour les bébés en pleine croissance.', 'Dès 6 mois', 'https://images.unsplash.com/photo-1495521939206-a217db9df264?w=400', 12),
 ('Bouillie Multi-Céréales', 3500, 'Mélange équilibré de mil, maïs et sorgho. Formule complète pour les enfants actifs.', 'Dès 12 mois', 'https://images.unsplash.com/photo-1464454709131-ffd692591ee5?w=400', 30),
 ('Bouillie Moringa Bio', 3800, 'Enrichie au moringa, super-aliment local reconnu pour ses vertus nutritionnelles exceptionnelles.', 'Dès 8 mois', 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400', 8),
 ('Bouillie Fruits du Sahel', 2900, 'Aux fruits locaux du Sahel : tamarin, dattes et baobab. Un goût unique et authentique.', 'Dès 6 mois', 'https://images.unsplash.com/photo-1490885578174-acda8905c2c6?w=400', 3);
