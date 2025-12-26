@@ -1,0 +1,20 @@
+services:
+  gnamgnam:
+    image: node:20-alpine
+    container_name: gnamgnam
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: sh -c "npm install && npm run dev -- --host"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.gnamgnam.rule=Host(`gnamgnam.nordikforge.com`)"
+      - "traefik.http.routers.gnamgnam.entrypoints=websecure"
+      - "traefik.http.routers.gnamgnam.tls.certresolver=myresolver"
+      - "traefik.http.services.gnamgnam.loadbalancer.server.port=5173"
+
+networks:
+  default:
+    name: web_network
+    external: true

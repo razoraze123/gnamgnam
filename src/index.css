@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+@theme {
+  /* Color Palette - Niger Premium Inspired */
+  --color-royal: #1A365D;
+  /* Dark Blue for text depth */
+  --color-royal-light: #2A4365;
+  --color-royal-dark: #1A202C;
+
+  --color-sage: #1E8449;
+  /* Deep Green - Niger Flag & Nature */
+  --color-sage-light: #27AE60;
+  --color-sage-dark: #145A32;
+
+  --color-safran: #E67E22;
+  /* Saffron Orange - Niger Flag & Sahara */
+  --color-safran-light: #F39C12;
+  --color-safran-dark: #D35400;
+
+  --color-sand: #FDFBF7;
+  /* Pearl Sand - Elegant background */
+  --color-sand-warm: #F9F4E8;
+  --color-sand-dark: #F2E9D4;
+
+  /* Fonts */
+  --font-sans: 'Outfit', system-ui, sans-serif;
+}
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-sand);
+  color: var(--color-royal);
+}
+
+/* Organic Blob Shapes */
+.blob {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: blob-morph 8s ease-in-out infinite;
+}
+
+@keyframes blob-morph {
+
+  0%,
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+}
+
+/* Product Card Hover Effect */
+.product-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px -12px rgba(26, 54, 93, 0.25);
+}
+
+/* Toast Animation */
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.toast-enter {
+  animation: slide-in 0.3s ease-out forwards;
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-safran) 0%, var(--color-sage) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-sand-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-royal-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-royal);
+}
+
+/* Button Styles */
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-safran) 0%, var(--color-safran-dark) 100%);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--color-safran-light) 0%, var(--color-safran) 100%);
+  transform: scale(1.02);
+}
+
+/* Glass Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Modal Animation */
+@keyframes scale-in {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
