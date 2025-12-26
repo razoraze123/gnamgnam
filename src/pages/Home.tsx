@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { Leaf, Sparkles, Sprout, Baby, Zap, Star, ArrowRight } from 'lucide-react'
+import { Leaf, Sprout, Baby, Zap, Star, ArrowRight } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import type { Product, Review } from '../lib/supabase'
 import ProductCard from '../components/ProductCard'
@@ -128,14 +128,16 @@ function HeroImage() {
         <div className="relative">
             <div className="relative aspect-square max-w-lg mx-auto">
                 <div className="absolute inset-0 bg-gradient-to-br from-sage/30 to-sage-light/30 rounded-full blob" />
-                <div className="absolute inset-8 bg-white rounded-3xl shadow-2xl overflow-hidden flex items-center justify-center">
-                    <div className="text-center p-8 flex flex-col items-center">
-                        <div className="w-24 h-24 bg-sand rounded-full flex items-center justify-center mb-6">
-                            <Sparkles className="w-12 h-12 text-sage animate-pulse" />
-                        </div>
-                        <p className="text-royal font-bold text-xl uppercase tracking-widest">Gnam Gnam</p>
-                        <p className="text-royal/60 text-sm italic">Bouillie Premium</p>
-                    </div>
+                <div className="absolute inset-4 bg-white rounded-3xl shadow-2xl overflow-hidden flex items-center justify-center border-8 border-white">
+                    <img
+                        src="/hero-gnamgnam.png"
+                        alt="Gnam Gnam Bouillie Premium"
+                        className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+                    />
+                </div>
+                {/* Micro-badge flottant */}
+                <div className="absolute -bottom-4 right-2 bg-safran text-white px-6 py-3 rounded-2xl shadow-xl font-bold text-sm animate-bounce">
+                    100% Naturel ✨
                 </div>
             </div>
         </div>

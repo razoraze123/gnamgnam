@@ -130,10 +130,10 @@ function CartItemCard({ item, updateQuantity, removeFromCart }: CartItemCardProp
                     <button
                         onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
                         disabled={isMinQuantity}
-                        className={`w-8 h-8 rounded-full bg-white border border-royal/20 text-royal transition-colors ${isMinQuantity
-                            ? 'opacity-30 cursor-not-allowed'
-                            : 'hover:bg-royal hover:text-white'
-                            }`}
+                        className={`
+                            w-8 h-8 rounded-full bg-white border border-royal/20 text-royal transition-colors
+                            ${isMinQuantity ? 'opacity-30 cursor-not-allowed' : 'hover:bg-royal hover:text-white'}
+                        `}
                         aria-label={`Réduire la quantité de ${item.product.nom}`}
                     >
                         -
@@ -141,7 +141,10 @@ function CartItemCard({ item, updateQuantity, removeFromCart }: CartItemCardProp
                     <span className="w-8 text-center font-medium">{item.quantity}</span>
                     <button
                         onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                        className="w-8 h-8 rounded-full bg-white border border-royal/20 text-royal hover:bg-royal hover:text-white transition-colors"
+                        className="
+                            w-8 h-8 rounded-full bg-white border border-royal/20 text-royal 
+                            hover:bg-royal hover:text-white transition-colors
+                        "
                         aria-label={`Augmenter la quantité de ${item.product.nom}`}
                     >
                         +

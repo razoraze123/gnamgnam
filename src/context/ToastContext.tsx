@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useCallback } from 'react'
 import type { ReactNode } from 'react'
 
+const TOAST_DURATION_MS = 3000
+
 interface Toast {
     id: string
     message: string
@@ -24,7 +26,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
         setTimeout(() => {
             setToasts(current => current.filter(t => t.id !== id))
-        }, 3000)
+        }, TOAST_DURATION_MS)
     }, [])
 
     const removeToast = useCallback((id: string) => {

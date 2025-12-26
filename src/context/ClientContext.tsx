@@ -67,7 +67,9 @@ export function ClientProvider({ children }: { children: ReactNode }) {
     }, [])
 
     // Register new client
-    const register = useCallback(async (data: { telephone: string; prenom: string; nom: string }): Promise<Client | null> => {
+    const register = useCallback(async (
+        data: { telephone: string; prenom: string; nom: string }
+    ): Promise<Client | null> => {
         try {
             const { data: newClient, error } = await supabase
                 .from('clients')
