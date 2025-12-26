@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { X, Phone, User, ArrowRight, Loader2 } from 'lucide-react'
 import { useClient } from '../context/ClientContext'
+import { sanitizeInput, isValidPhone } from '../utils/security'
 
 interface PhoneLoginModalProps {
     isOpen: boolean
@@ -23,13 +24,15 @@ export default function PhoneLoginModal({ isOpen, onClose, onSuccess }: PhoneLog
         e.preventDefault()
         setError('')
 
-        if (!telephone.trim() || telephone.length < 8) {
-            setError('Numéro de téléphone invalide')
+        const cleanPhone = sanitizeInput(telephone)
+
+        if (!cleanPhone || !isValidPhone(cleanPhone)) {
+            setError('Numéro de téléphone invalide (8 à 15 chiffres)')
             return
         }
 
         setIsLoading(true)
-        const client = await login(telephone)
+        const client = await login(cleanPhone)
         setIsLoading(false)
 
         if (client) {
@@ -46,13 +49,21 @@ export default function PhoneLoginModal({ isOpen, onClose, onSuccess }: PhoneLog
         e.preventDefault()
         setError('')
 
-        if (!prenom.trim() || !nom.trim()) {
+        const cleanPrenom = sanitizeInput(prenom)
+        const cleanNom = sanitizeInput(nom)
+        const cleanPhone = sanitizeInput(telephone)
+
+        if (!cleanPrenom || !cleanNom) {
             setError('Veuillez remplir tous les champs')
             return
         }
 
         setIsLoading(true)
-        const client = await register({ telephone, prenom, nom })
+        const client = await register({
+            telephone: cleanPhone,
+            prenom: cleanPrenom,
+            nom: cleanNom
+        })
         setIsLoading(false)
 
         if (client) {
