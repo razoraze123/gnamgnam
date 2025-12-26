@@ -147,7 +147,7 @@ export default function ProductModal({ product, isOpen, onClose }: ProductModalP
                             {!isOutOfStock && (
                                 <div className='flex items-center gap-2 text-[10px] text-royal/40 font-bold mb-6 justify-center md:justify-start uppercase tracking-wider'>
                                     <span className='w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse' />
-                                    Expédition sous 24h
+                                    Expédition sous 25h
                                 </div>
                             )}
 

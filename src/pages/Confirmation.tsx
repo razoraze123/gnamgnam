@@ -38,7 +38,7 @@ export default function Confirmation() {
                         </div>
                         <h3 className="font-bold text-royal mb-2">Livraison Rapide</h3>
                         <p className="text-royal/60 text-sm">
-                            Livraison sous 24-48h selon votre localisation
+                            Livraison sous 25H selon votre localisation
                         </p>
                     </div>
                 </div>

@@ -91,6 +91,7 @@ export function generateOrderWhatsAppUrl({
     }
     message += `💰 *TOTAL FINAL : ${totalFinal.toLocaleString()} FCFA*\n`
     message += `━━━━━━━━━━━━━━━━━━━━━\n\n`
+    message += `🚚 _Livraison estimée sous 25H_\n`
     message += `✨ _Merci pour votre confiance !_ ✨`
 
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
