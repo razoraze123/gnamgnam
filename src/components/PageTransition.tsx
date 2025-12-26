@@ -5,6 +5,9 @@ interface PageTransitionProps {
     children: ReactNode
 }
 
+const TRANSITION_DURATION_IN = 0.15
+const TRANSITION_DURATION_OUT = 0.05
+
 const pageVariants: Variants = {
     initial: {
         opacity: 0,
@@ -12,14 +15,14 @@ const pageVariants: Variants = {
     animate: {
         opacity: 1,
         transition: {
-            duration: 0.15,
-            ease: "linear"
+            duration: TRANSITION_DURATION_IN,
+            ease: 'linear'
         }
     },
     exit: {
         opacity: 0,
         transition: {
-            duration: 0.05
+            duration: TRANSITION_DURATION_OUT
         }
     }
 }

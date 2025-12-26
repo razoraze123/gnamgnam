@@ -72,9 +72,11 @@ export function generateOrderWhatsAppUrl({
     message += `\n`
 
     message += `*💳 PAIEMENT*\n`
-    message += customerInfo.moyenPaiement === 'especes'
-        ? `💵 Espèces à la ${customerInfo.modeLivraison === 'livraison' ? 'livraison' : 'remise'}\n\n`
-        : `📱 Nita\n\n`
+    const deliveryType = customerInfo.modeLivraison === 'livraison' ? 'livraison' : 'remise'
+    const paymentText = customerInfo.moyenPaiement === 'especes'
+        ? `💵 Espèces à la ${deliveryType}`
+        : '📱 Nita'
+    message += `${paymentText}\n\n`
 
     message += `*🛒 PANIER*\n`
     items.forEach(item => {

@@ -1,5 +1,7 @@
 import { MessageCircle, Heart, Mail } from 'lucide-react'
 
+const CURRENT_YEAR = new Date().getFullYear()
+
 export default function Footer() {
     return (
         <footer className="bg-royal text-white py-16">
@@ -56,7 +58,7 @@ export default function Footer() {
 
                 <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
                     <p className="text-white/60 text-sm">
-                        © 2024 Gnam Gnam Bouillie. Tous droits réservés.
+                        © {CURRENT_YEAR} Gnam Gnam Bouillie. Tous droits réservés.
                     </p>
                     <div className="flex items-center gap-2 text-white/40 text-sm">
                         <span>Fait avec</span>

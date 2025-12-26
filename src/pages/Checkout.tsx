@@ -61,9 +61,14 @@ export default function Checkout() {
     }, [isLogged, client])
 
     // Get delivery fee based on selected quartier
-    const fraisLivraison = formData.modeLivraison === 'livraison' && formData.quartier
-        ? QUARTIERS.find(q => q.nom === formData.quartier)?.frais || 0
-        : 0
+    const getDeliveryFee = (): number => {
+        if (formData.modeLivraison !== 'livraison' || !formData.quartier) {
+            return 0
+        }
+        const selectedQuartier = QUARTIERS.find(q => q.nom === formData.quartier)
+        return selectedQuartier?.frais || 0
+    }
+    const fraisLivraison = getDeliveryFee()
 
     const totalFinal = total + fraisLivraison
 
