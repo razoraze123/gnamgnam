@@ -5,22 +5,9 @@ import { useClient } from '../context/ClientContext'
 import { supabase } from '../lib/supabase'
 import { sanitizeInput, isValidPhone } from '../utils/security'
 import { generateOrderWhatsAppUrl } from '../utils/whatsapp'
+import { QUARTIERS } from '../config/constants'
 import QuartierSelector from '../components/QuartierSelector'
 import OrderSummary from '../components/OrderSummary'
-
-// Liste des quartiers avec frais de livraison
-const QUARTIERS = [
-    { nom: 'Plateau', frais: 1000 },
-    { nom: 'Koulouba', frais: 1000 },
-    { nom: 'Yantala', frais: 1200 },
-    { nom: 'Gamkallé', frais: 1200 },
-    { nom: 'Boukoki', frais: 1000 },
-    { nom: 'Talladjé', frais: 1300 },
-    { nom: 'Lazaret', frais: 1300 },
-    { nom: 'Saga', frais: 1500 },
-    { nom: 'Niamey 2000', frais: 1400 },
-    { nom: 'Francophonie', frais: 1500 },
-]
 
 interface CheckoutFormData {
     prenom: string

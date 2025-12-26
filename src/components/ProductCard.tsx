@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { Product } from '../lib/supabase'
 import { useCart } from '../context/CartContext'
 import { useToast } from '../context/ToastContext'
+import { LOW_STOCK_THRESHOLD } from '../config/constants'
 import ProductModal from './ProductModal'
 
 interface ProductCardProps {
@@ -20,7 +21,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     }
 
     const isOutOfStock = product.stock_disponible <= 0
-    const isLowStock = product.stock_disponible > 0 && product.stock_disponible < 5
+    const isLowStock = product.stock_disponible > 0 && product.stock_disponible < LOW_STOCK_THRESHOLD
 
     return (
         <>

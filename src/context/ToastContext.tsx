@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useCallback } from 'react'
 import type { ReactNode } from 'react'
-
-const TOAST_DURATION_MS = 3000
+import { TOAST_DURATION_MS } from '../config/constants'
 
 interface Toast {
     id: string
