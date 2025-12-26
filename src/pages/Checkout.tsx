@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useClient } from '../context/ClientContext'
 import { supabase } from '../lib/supabase'
+import { sanitizeInput, isValidPhone } from '../utils/security'
 import { generateOrderWhatsAppUrl } from '../utils/whatsapp'
 
 // Liste des quartiers avec frais de livraison
@@ -109,7 +110,7 @@ export default function Checkout() {
         if (!formData.nom.trim()) newErrors.nom = 'Nom requis'
         if (!formData.telephone.trim()) {
             newErrors.telephone = 'Numéro requis'
-        } else if (!/^[0-9]{8,15}$/.test(formData.telephone.replace(/\s/g, ''))) {
+        } else if (!isValidPhone(formData.telephone)) {
             newErrors.telephone = 'Numéro invalide'
         }
 
@@ -143,14 +144,14 @@ export default function Checkout() {
                     frais_livraison: fraisLivraison,
                     mode_livraison: formData.modeLivraison,
                     quartier: formData.quartier,
-                    adresse_details: formData.descriptionLocalisation,
+                    adresse_details: sanitizeInput(formData.descriptionLocalisation),
                     moyen_paiement: formData.moyenPaiement
                 }])
 
                 // Update client preferences
                 await updateClient({
                     quartier_prefere: formData.quartier,
-                    adresse_details: formData.descriptionLocalisation
+                    adresse_details: sanitizeInput(formData.descriptionLocalisation)
                 })
             } catch (err) {
                 console.error('Error saving order:', err)
@@ -162,12 +163,12 @@ export default function Checkout() {
             items,
             total,
             customerInfo: {
-                prenom: formData.prenom,
-                nom: formData.nom,
-                telephone: formData.telephone,
+                prenom: sanitizeInput(formData.prenom),
+                nom: sanitizeInput(formData.nom),
+                telephone: sanitizeInput(formData.telephone),
                 modeLivraison: formData.modeLivraison,
                 quartier: formData.quartier,
-                descriptionLocalisation: formData.descriptionLocalisation,
+                descriptionLocalisation: sanitizeInput(formData.descriptionLocalisation),
                 moyenPaiement: formData.moyenPaiement,
                 fraisLivraison
             }
