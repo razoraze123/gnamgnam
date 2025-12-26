@@ -60,7 +60,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 {/* Product Info */}
                 <div className='p-4'>
                     <h3
-                        className='text-lg font-bold text-royal mb-1 line-clamp-1'
+                        className='text-lg font-bold text-royal mb-1 line-clamp-2'
                     >
                         {product.nom}
                     </h3>
