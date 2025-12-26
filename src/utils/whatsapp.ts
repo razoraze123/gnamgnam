@@ -21,18 +21,20 @@ const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '33611309743'
  * Generate WhatsApp URL with order message for cart overview
  */
 export function generateCartWhatsAppUrl(items: CartItem[], total: number): string {
-    let message = `*BON DE COMMANDE - GNAM GNAM BOUILLIE*\n`
-    message += `---------------------------------------\n`
-    message += `Détails de la sélection :\n`
+    let message = `*🌟 RÉCAPITULATIF PANIER - GNAM GNAM 🌟*\n`
+    message += `━━━━━━━━━━━━━━━━━━━━━\n\n`
+    message += `🛒 *Détails de la sélection :*\n`
 
     items.forEach(item => {
-        message += `- ${item.quantity} x ${item.product.nom} (${item.product.prix.toLocaleString()} FCFA)\n`
+        message += `• ${item.quantity} x ${item.product.nom}\n`
+        message += `  └ ${item.product.prix.toLocaleString()} FCFA\n`
     })
 
-    message += `---------------------------------------\n`
-    message += `TOTAL À RÉGLER : ${total.toLocaleString()} FCFA\n`
-    message += `---------------------------------------\n`
-    message += `Lien panier : http://gnamgnam.nordikforge.com/`
+    message += `\n━━━━━━━━━━━━━━━━━━━━━\n`
+    message += `💰 *TOTAL ESTIMÉ : ${total.toLocaleString()} FCFA*\n`
+    message += `━━━━━━━━━━━━━━━━━━━━━\n\n`
+    message += `🔗 _Complétez votre commande ici :_\n`
+    message += `http://gnamgnam.nordikforge.com/`
 
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
 }
@@ -51,48 +53,45 @@ export function generateOrderWhatsAppUrl({
 
     const totalFinal = total + customerInfo.fraisLivraison
 
-    let message = `*🛍️ NOUVELLE COMMANDE - GNAM GNAM*\n`
+    let message = `*📦 NOUVELLE COMMANDE GNAM GNAM *\n`
     message += `━━━━━━━━━━━━━━━━━━━━━\n\n`
 
-    message += `*👤 CLIENT*\n`
-    message += `Nom: ${customerInfo.prenom} ${customerInfo.nom}\n`
-    message += `Tél: ${customerInfo.telephone}\n\n`
+    message += `👤 *INFO CLIENT*\n`
+    message += `• Nom : ${customerInfo.prenom} ${customerInfo.nom}\n`
+    message += `• Tél : ${customerInfo.telephone}\n\n`
 
-    message += `*📦 LIVRAISON*\n`
+    message += `🚚 *LOGISTIQUE*\n`
     if (customerInfo.modeLivraison === 'livraison') {
-        message += `🚚 Livraison à domicile\n`
-        message += `📍 Quartier: ${customerInfo.quartier}\n`
-        message += `💵 Frais: ${customerInfo.fraisLivraison.toLocaleString()} FCFA\n`
+        message += `• Mode : Livraison à domicile\n`
+        message += `• Quartier : ${customerInfo.quartier}\n`
         if (customerInfo.descriptionLocalisation) {
-            message += `📝 Indications: ${customerInfo.descriptionLocalisation}\n`
+            message += `• Précision : ${customerInfo.descriptionLocalisation}\n`
         }
     } else {
-        message += `🏪 Retrait en boutique\n`
+        message += `• Mode : Retrait en boutique\n`
     }
     message += `\n`
 
-    let paymentText = ''
-    if (customerInfo.moyenPaiement === 'especes') {
-        const deliveryType = customerInfo.modeLivraison === 'livraison' ? 'livraison' : 'remise'
-        paymentText = `💵 Espèces à la ${deliveryType}`
-    } else {
-        paymentText = '📱 Nita'
-    }
-    message += `${paymentText}\n\n`
+    message += `💳 *RÈGLEMENT*\n`
+    const paymentText = customerInfo.moyenPaiement === 'especes'
+        ? '💵 Espèces à la livraison'
+        : '📱 Paiement via Nita'
+    message += `• Moyen : ${paymentText}\n\n`
 
-    message += `*🛒 PANIER*\n`
+    message += `🛒 *DÉTAIL DU PANIER*\n`
     items.forEach(item => {
         message += `• ${item.quantity}x ${item.product.nom}\n`
         message += `  └ ${(item.product.prix * item.quantity).toLocaleString()} FCFA\n`
     })
 
     message += `\n━━━━━━━━━━━━━━━━━━━━━\n`
-    message += `Sous-total: ${total.toLocaleString()} FCFA\n`
+    message += `• Sous-total : ${total.toLocaleString()} FCFA\n`
     if (customerInfo.fraisLivraison > 0) {
-        message += `Livraison: ${customerInfo.fraisLivraison.toLocaleString()} FCFA\n`
+        message += `• Livraison  : ${customerInfo.fraisLivraison.toLocaleString()} FCFA\n`
     }
-    message += `*💰 TOTAL: ${totalFinal.toLocaleString()} FCFA*\n`
-    message += `━━━━━━━━━━━━━━━━━━━━━`
+    message += `💰 *TOTAL FINAL : ${totalFinal.toLocaleString()} FCFA*\n`
+    message += `━━━━━━━━━━━━━━━━━━━━━\n\n`
+    message += `✨ _Merci pour votre confiance !_ ✨`
 
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
 }
